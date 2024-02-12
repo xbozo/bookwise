@@ -15,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={nunitoSans.className}>{children}</body>
+      <body
+        className={`${nunitoSans.className} bg-ds-gray-800 text-ds-gray-100 p-5 h-screen`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
