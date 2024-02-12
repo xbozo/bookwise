@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         "sign-in-bg": "url('/images/sign-in-bg.png')",
+        "side-header-bg": "url('/images/side-header-bg.png')",
       },
       maxWidth: {
         "8xl": "1440px",

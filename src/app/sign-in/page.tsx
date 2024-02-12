@@ -1,10 +1,16 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Login",
+};
+
 export default function SignIn() {
   return (
-    <div className="flex h-full">
-      <section className="w-1/3 rounded-xl bg-gradient-to-tr from-ds-green-200 to-ds-purple-200 h-full relative flex items-center justify-center">
+    <div className="flex h-[calc(100vh-40px)]">
+      <section className="w-1/3 rounded-xl bg-gradient-to-tr from-ds-green-200 to-ds-purple-200  relative flex items-center justify-center">
         <img alt="" src="/logo.svg" />
 
-        <div className="rounded-xl bg-sign-in-bg opacity-15 absolute h-full w-full bg-cover bg-no-repeat" />
+        <div className="rounded-xl bg-sign-in-bg opacity-15 absolute size-full bg-cover bg-no-repeat" />
       </section>
 
       <section className="w-2/3 flex flex-col items-center justify-center">
