@@ -1,34 +1,46 @@
+import { Book } from "@/@types/book";
 import Image from "next/image";
 
-export function PopularBookCard() {
+export function PopularBookCard({ author, name, cover_url }: Book) {
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">
         <div className="flex gap-4">
-          <img
-            src="/images/bozo-placeholder-avatar.png"
+          <Image
+            quality={100}
             alt=""
-            className="h-full w-28 rounded-lg"
+            src={cover_url}
+            width={64}
+            height={94}
+            className="rounded-lg"
           />
 
           <div className="flex flex-col justify-between">
             <div className="flex flex-col">
-              <span>A revolução dos bichos</span>
-              <span className="text-sm text-ds-gray-400">George Orwell</span>
+              <span>{name}</span>
+              <span className="text-sm text-ds-gray-400">{author}</span>
             </div>
 
             <span className="flex items-start gap-1 fill-ds-purple-100">
-              {Array.from({ length: 5 }).map(() => {
+              {Array.from({ length: 4 }).map(() => {
                 return (
                   <Image
                     quality={100}
                     width={15}
                     height={15}
-                    src="/images/star-outline.svg"
+                    src="/images/star-filled.svg"
                     alt=""
                   />
                 );
               })}
+
+              <Image
+                quality={100}
+                width={15}
+                height={15}
+                src="/images/star-outline.svg"
+                alt=""
+              />
             </span>
           </div>
         </div>

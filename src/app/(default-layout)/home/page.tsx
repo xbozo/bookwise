@@ -1,3 +1,5 @@
+import { Book } from "@/@types/book";
+import { fetchAllBooks } from "@/actions/books";
 import { Metadata } from "next";
 import Image from "next/image";
 import { BookReviewCard } from "./book-review-card";
@@ -7,7 +9,11 @@ export const metadata: Metadata = {
   title: "Início",
 };
 
-export default function Home() {
+export default async function Home() {
+  const books: Book[] = await fetchAllBooks();
+
+  const popularBooks = books.slice(4);
+
   return (
     <>
       <div className="flex items-center gap-3">
@@ -21,8 +27,20 @@ export default function Home() {
             Avaliações mais recentes
           </span>
 
-          <BookReviewCard />
-          <BookReviewCard />
+          {books.map((book) => {
+            return (
+              <BookReviewCard
+                key={book.id}
+                id={book.id}
+                name={book.name}
+                author={book.author}
+                summary={book.summary}
+                cover_url={book.cover_url}
+                total_pages={book.total_pages}
+                created_at={book.created_at}
+              />
+            );
+          })}
         </section>
 
         <section className="col-span-2 flex flex-col gap-3">
@@ -41,8 +59,20 @@ export default function Home() {
             </div>
           </div>
 
-          <PopularBookCard />
-          <PopularBookCard />
+          {popularBooks.map((book) => {
+            return (
+              <PopularBookCard
+                key={book.id}
+                id={book.id}
+                name={book.name}
+                author={book.author}
+                summary={book.summary}
+                cover_url={book.cover_url}
+                total_pages={book.total_pages}
+                created_at={book.created_at}
+              />
+            );
+          })}
         </section>
       </div>
     </>

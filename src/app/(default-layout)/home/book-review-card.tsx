@@ -1,6 +1,9 @@
+import { Book } from "@/@types/book";
 import Image from "next/image";
 
-export function BookReviewCard() {
+export function BookReviewCard({ author, name, summary, cover_url }: Book) {
+  console.log(cover_url);
+
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">
@@ -22,14 +25,6 @@ export function BookReviewCard() {
         <span className="flex items-start gap-1 fill-ds-purple-100">
           {Array.from({ length: 5 }).map(() => {
             return (
-              // <Image
-              //   quality={100}
-              //   width={15}
-              //   height={15}
-              //   src="/images/star-filled.svg"
-              //   alt=""
-              // />
-
               <img
                 src="/images/star-filled.svg"
                 alt=""
@@ -41,23 +36,16 @@ export function BookReviewCard() {
       </div>
 
       <div className="flex gap-6">
-        <img
-          src="/images/bozo-placeholder-avatar.png"
-          alt=""
-          className="h-full w-28 rounded-lg"
-        />
+        <Image quality={100} alt="" src={cover_url} width={108} height={152} />
 
         <div className="flex flex-col justify-between gap-4">
           <span>
-            <h3 className="text-xl font-bold">O Hobbit</h3>
-            <span className=" text-sm text-ds-gray-300">J.R.R. Tolkien</span>
+            <h3 className="text-xl font-bold">{name}</h3>
+            <span className=" text-sm text-ds-gray-300">{author}</span>
           </span>
 
           <p className="line-clamp-4 text-ellipsis text-sm text-ds-gray-200">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            provident animi recusandae impedit voluptatum consequatur. Dolorum
-            adipisci doloribus animi repudiandae culpa id consequatur corporis
-            non quaerat eum voluptatibus, ea consequuntur.
+            {summary}
           </p>
         </div>
       </div>
