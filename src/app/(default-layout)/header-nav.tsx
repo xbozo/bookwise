@@ -5,8 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-// color='#F8F9FC'
-// color='#8D95AF'
 const _navItems = [
   {
     name: "Início",
@@ -51,7 +49,7 @@ export function HeaderNav() {
                     href={item.href}
                     className="flex items-center gap-3 text-start text-ds-gray-100"
                   >
-                    <div className="bg-gradient-to-t from-ds-purple-100 to-ds-green-100 h-6 w-1 rounded-lg" />
+                    <div className="h-6 w-1 rounded-lg bg-gradient-to-t from-ds-purple-100 to-ds-green-100" />
 
                     {item.icon}
 
@@ -64,7 +62,7 @@ export function HeaderNav() {
                     href={item.href}
                     className="flex items-center gap-3 text-start text-ds-gray-400"
                   >
-                    <div className="bg-gradient-to-t opacity-0 from-ds-purple-100 to-ds-green-100 h-6 w-1 rounded-lg" />
+                    <div className="h-6 w-1 rounded-lg bg-gradient-to-t from-ds-purple-100 to-ds-green-100 opacity-0" />
 
                     {item.icon}
 
