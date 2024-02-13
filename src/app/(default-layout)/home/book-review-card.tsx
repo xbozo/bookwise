@@ -2,8 +2,6 @@ import { Book } from "@/@types/book";
 import Image from "next/image";
 
 export function BookReviewCard({ author, name, summary, cover_url }: Book) {
-  console.log(cover_url);
-
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">

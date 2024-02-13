@@ -1,7 +1,7 @@
 import { Book } from "@/@types/book";
 import Image from "next/image";
 
-export function PopularBookCard({ author, name, cover_url }: Book) {
+export function BookCard({ author, name, cover_url }: Book) {
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">

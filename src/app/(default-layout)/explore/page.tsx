@@ -2,13 +2,13 @@
 
 import { Book } from "@/@types/book";
 import { Category } from "@/@types/category";
-import { fetchAllBooks, fetchAllCategories } from "@/actions/books";
+import { Filter } from "@/@types/filter";
+import { fetchAllCategories, fetchBooksByCategory } from "@/actions/books";
+import { BookCard } from "@/components/book-card";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FilterBadge } from "./filter-badge";
 import { FilterBadgeSkeleton } from "./filter-badge-skeleton";
-
-type Filter = Partial<Category> & { isActive?: boolean };
 
 export default function Explore() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -23,21 +23,26 @@ export default function Explore() {
   useEffect(() => {
     document.title = "Explorar | Bookwise";
 
-    async function fetchBooks() {
-      const res = await fetchAllBooks();
-
-      setBooks(res);
-    }
-
     async function fetchCategories() {
       const res = await fetchAllCategories();
 
       setCategories([...categories, ...res]);
     }
 
-    fetchBooks();
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    async function fetchFilteredBooks() {
+      const filteredBooks = await fetchBooksByCategory(selectedFilters);
+
+      if (filteredBooks) {
+        setBooks(filteredBooks);
+      }
+    }
+
+    fetchFilteredBooks();
+  }, [selectedFilters]);
 
   function checkIfFilterIsActive(categoryId: string) {
     return selectedFilters.some((filter) => filter.id === categoryId);
@@ -84,7 +89,7 @@ export default function Explore() {
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-3">
         {categories.length === 0 || categories.length === 1 ? (
           <>
             {Array.from({ length: 13 }).map((_, i) => {
@@ -109,6 +114,24 @@ export default function Explore() {
           </>
         )}
       </div>
+
+      <main className="grid grid-cols-3 gap-3">
+        {books.map((book) => {
+          return (
+            <BookCard
+              key={book.id}
+              id={book.id}
+              name={book.name}
+              author={book.author}
+              summary={book.summary}
+              cover_url={book.cover_url}
+              total_pages={book.total_pages}
+              created_at={book.created_at}
+            />
+          );
+        })}
+        <div className=""></div>
+      </main>
     </div>
   );
 }

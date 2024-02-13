@@ -1,9 +1,9 @@
 import { Book } from "@/@types/book";
 import { fetchAllBooks } from "@/actions/books";
+import { BookCard } from "@/components/book-card";
 import { Metadata } from "next";
 import Image from "next/image";
 import { BookReviewCard } from "./book-review-card";
-import { PopularBookCard } from "./popular-book-card";
 
 export const metadata: Metadata = {
   title: "Início",
@@ -61,7 +61,7 @@ export default async function Home() {
 
           {popularBooks.map((book) => {
             return (
-              <PopularBookCard
+              <BookCard
                 key={book.id}
                 id={book.id}
                 name={book.name}

@@ -1,5 +1,6 @@
 "use server";
 
+import { Filter } from "@/@types/filter";
 import { prisma } from "@/libs/prisma";
 
 export async function fetchAllBooks() {
@@ -8,6 +9,32 @@ export async function fetchAllBooks() {
   if (!books) {
     return [];
   }
+
+  return books;
+}
+
+export async function fetchBooksByCategory(filters: Filter[]) {
+  if (!filters) {
+    return;
+  }
+
+  if (filters.some((filter) => filter.id === "all" && filter.name === "Tudo")) {
+    const books = await prisma.book.findMany();
+
+    return books;
+  }
+
+  const books = await prisma.book.findMany({
+    where: {
+      categories: {
+        some: {
+          categoryId: {
+            in: filters.map((filter) => filter.id?.toString() || ""),
+          },
+        },
+      },
+    },
+  });
 
   return books;
 }
