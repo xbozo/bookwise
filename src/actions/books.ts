@@ -25,3 +25,13 @@ export async function fetchBook({ bookId }: { bookId: string }) {
 
   return book;
 }
+
+export async function fetchAllCategories() {
+  const categories = await prisma.category.findMany();
+
+  if (!categories) {
+    return [];
+  }
+
+  return categories;
+}

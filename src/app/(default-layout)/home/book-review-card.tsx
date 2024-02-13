@@ -23,9 +23,10 @@ export function BookReviewCard({ author, name, summary, cover_url }: Book) {
         </div>
 
         <span className="flex items-start gap-1 fill-ds-purple-100">
-          {Array.from({ length: 5 }).map(() => {
+          {Array.from({ length: 5 }).map((_, i) => {
             return (
               <img
+                key={i}
                 src="/images/star-filled.svg"
                 alt=""
                 className="h-[15px] w-[15px]"

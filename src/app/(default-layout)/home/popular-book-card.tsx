@@ -22,7 +22,7 @@ export function PopularBookCard({ author, name, cover_url }: Book) {
             </div>
 
             <span className="flex items-start gap-1 fill-ds-purple-100">
-              {Array.from({ length: 4 }).map(() => {
+              {Array.from({ length: 4 }).map((_, i) => {
                 return (
                   <Image
                     quality={100}
@@ -30,6 +30,7 @@ export function PopularBookCard({ author, name, cover_url }: Book) {
                     height={15}
                     src="/images/star-filled.svg"
                     alt=""
+                    key={i}
                   />
                 );
               })}

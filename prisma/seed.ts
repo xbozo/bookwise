@@ -1,16 +1,16 @@
-import { PrismaClient } from '@prisma/client'
-import { books } from './constants/books'
-import { categories } from './constants/categories'
-import { ratings } from './constants/ratings'
-import { users } from './constants/users'
-const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client";
+import { books } from "./constants/books";
+import { categories } from "./constants/categories";
+import { ratings } from "./constants/ratings";
+import { users } from "./constants/users";
+const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.rating.deleteMany()
-  await prisma.user.deleteMany()
-  await prisma.categoriesOnBooks.deleteMany()
-  await prisma.category.deleteMany()
-  await prisma.book.deleteMany()
+  await prisma.rating.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.categoriesOnBooks.deleteMany();
+  await prisma.category.deleteMany();
+  await prisma.book.deleteMany();
 
   const usersSeed = users.map((user) => {
     return prisma.user.create({
@@ -19,8 +19,8 @@ async function main() {
         name: user.name,
         avatar_url: user.avatar_url,
       },
-    })
-  })
+    });
+  });
 
   const categoriesSeed = categories.map((category) => {
     return prisma.category.create({
@@ -28,8 +28,8 @@ async function main() {
         name: category.name,
         id: category.id,
       },
-    })
-  })
+    });
+  });
 
   const booksSeed = books.map((book) => {
     return prisma.book.create({
@@ -49,13 +49,13 @@ async function main() {
                     id: category.id,
                   },
                 },
-              }
+              };
             }),
           ],
         },
       },
-    })
-  })
+    });
+  });
 
   const ratingsSeed = ratings.map((rating) => {
     return prisma.rating.create({
@@ -70,23 +70,23 @@ async function main() {
           connect: { id: rating.book_id },
         },
       },
-    })
-  })
+    });
+  });
 
   await prisma.$transaction([
     ...categoriesSeed,
     ...booksSeed,
     ...usersSeed,
     ...ratingsSeed,
-  ])
+  ]);
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
