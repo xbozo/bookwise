@@ -59,12 +59,11 @@ export const books = [
   },
   {
     id: "d0d70b05-d48f-4d83-b1e8-0b4dd984c97d",
-    name: "Hábitos de desenvolvedores",
-    author: "Desconhecido",
+    name: "A revolução dos bichos",
+    author: "George Orwell",
     summary:
       "Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget",
-    cover_url:
-      "/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png",
+    cover_url: "/images/books/a-revolucao-dos-bixos.png",
     total_pages: 350,
     categories: [
       {
