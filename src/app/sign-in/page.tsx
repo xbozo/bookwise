@@ -1,33 +1,49 @@
-import { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Login",
-};
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SignIn() {
+  const { data: userData, status: sessionStatus } = useSession();
+  console.log(userData);
+  // console.log(status);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    document.title = "Entrar | Bookwise";
+  }, []);
+
+  useEffect(() => {
+    if (sessionStatus === "authenticated") {
+      return router.push("/home");
+    }
+  }, [sessionStatus]);
+
   return (
     <div className="flex h-[calc(100vh-40px)]">
-      <section className="w-1/3 rounded-xl bg-gradient-to-tr from-ds-green-200 to-ds-purple-200  relative flex items-center justify-center">
+      <section className="relative flex w-1/3 items-center justify-center  rounded-xl bg-gradient-to-tr from-ds-green-200 to-ds-purple-200">
         <img alt="" src="/logo.svg" />
 
-        <div className="rounded-xl bg-sign-in-bg opacity-15 absolute size-full bg-cover bg-no-repeat" />
+        <div className="absolute size-full rounded-xl bg-sign-in-bg bg-cover bg-no-repeat opacity-15" />
       </section>
 
-      <section className="w-2/3 flex flex-col items-center justify-center">
+      <section className="flex w-2/3 flex-col items-center justify-center">
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-1.5">
-            <h1 className="font-bold text-2xl leading-4">Boas vindas!</h1>
+            <h1 className="text-2xl font-bold leading-4">Boas vindas!</h1>
             <p className="text-ds-gray-300">
               Faça seu login ou acesse como visitante.
             </p>
           </div>
 
-          <div className="gap-3 flex flex-col">
-            <button>
+          <div className="flex flex-col gap-3">
+            <button onClick={() => signIn("google")}>
               <img src="/images/google-logo.svg" alt="Entrar com Google" />
             </button>
 
-            <button>
+            <button onClick={() => signIn("github")}>
               <img src="/images/github-logo.svg" alt="Entrar com GitHub" />
             </button>
 
