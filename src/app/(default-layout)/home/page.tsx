@@ -1,5 +1,5 @@
 import { Book } from "@/@types/book";
-import { fetchAllBooks } from "@/actions/books";
+import { fetchAllBooks, fetchBooksByRating } from "@/actions/books";
 import { BookCard } from "@/components/book-card";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -11,8 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const books: Book[] = await fetchAllBooks();
-
-  const popularBooks = books.slice(4);
+  const popularBooks: Book[] = await fetchBooksByRating();
 
   return (
     <>

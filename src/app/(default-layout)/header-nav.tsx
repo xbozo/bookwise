@@ -1,8 +1,17 @@
 "use client";
 
-import { Binoculars, ChartLineUp, User } from "@phosphor-icons/react";
+import {
+  Binoculars,
+  ChartLineUp,
+  SignIn,
+  SignOut,
+  User,
+} from "@phosphor-icons/react";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+// import signInIcon from "public/images/sign-in.svg";
 import { useEffect, useState } from "react";
 
 const _navItems = [
@@ -25,6 +34,7 @@ const _navItems = [
 
 export function HeaderNav() {
   const [navItems, setNavItems] = useState(_navItems);
+  const { data: userData } = useSession();
 
   const pathname = usePathname();
 
@@ -38,9 +48,13 @@ export function HeaderNav() {
   }, []);
 
   return (
-    <nav>
+    <nav className="flex h-full flex-col items-center">
       <ul className="space-y-4">
         {navItems.map((item, index) => {
+          if (!userData && item.href === "/profile") {
+            return;
+          }
+
           if (item.href === pathname) {
             return (
               <li key={index}>
@@ -75,7 +89,42 @@ export function HeaderNav() {
         })}
       </ul>
 
-      <button className="flex items-center gap-3 text-start text-ds-gray-400"></button>
+      {userData ? (
+        <div className="mt-auto flex items-center gap-3">
+          <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-gradient-to-r from-ds-green-100 to-ds-purple-100">
+            <Image
+              src={userData.user.avatar_url}
+              width={32}
+              height={32}
+              alt="Usuário"
+              className="rounded-full"
+            />
+          </div>
+
+          <span className="font-sm leading-4 text-ds-gray-200">
+            {userData.user.name}
+          </span>
+
+          <button onClick={() => signOut()}>
+            <SignOut
+              color="#F75A68"
+              className="hover:brightness-75"
+              size={22}
+            />
+          </button>
+        </div>
+      ) : (
+        <Link
+          href="/sign-in"
+          className="mx-auto mt-auto flex items-center gap-3 text-start text-ds-gray-400"
+        >
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-ds-gray-200">Fazer login</span>
+
+            <SignIn color="#50B2C0" size={22} />
+          </div>
+        </Link>
+      )}
     </nav>
   );
 }
