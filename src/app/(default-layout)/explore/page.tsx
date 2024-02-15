@@ -6,16 +6,17 @@ import { Filter } from "@/@types/filter";
 import { fetchAllCategories, fetchBooksByCategory } from "@/actions/books";
 import { BookCard } from "@/components/book-card";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FilterBadge } from "./filter-badge";
 import { FilterBadgeSkeleton } from "./filter-badge-skeleton";
 
 export default function Explore() {
   const [books, setBooks] = useState<Book[]>([]);
+  const [search, setSearch] = useState("");
+
   const [categories, setCategories] = useState<Category[]>([
     { id: "all", name: "Tudo" },
   ]);
-
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>([
     { id: "all", name: "Tudo" },
   ]);
@@ -64,6 +65,29 @@ export default function Explore() {
     }
   }
 
+  async function handleSearchBook(e: ChangeEvent<HTMLInputElement>) {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearch(searchTerm);
+
+    if (searchTerm === "") {
+      const allBooks = await fetchBooksByCategory(selectedFilters);
+
+      if (allBooks) {
+        return setBooks(allBooks);
+      }
+    }
+
+    const searchedBooks = books.filter((book) => {
+      const normalizedAuthor = book.author.toLowerCase();
+      const normalizedName = book.name.toLowerCase();
+      return (
+        normalizedAuthor.includes(searchTerm) ||
+        normalizedName.includes(searchTerm)
+      );
+    });
+    setBooks(searchedBooks);
+  }
+
   return (
     <div className="flex flex-col gap-10">
       <div className="flex justify-between gap-2">
@@ -72,11 +96,13 @@ export default function Explore() {
           <h1 className="text-2xl font-bold leading-6">Explorar</h1>
         </div>
 
-        <div className="flex  gap-2 rounded-md border border-ds-gray-500 px-5 py-3.5">
+        <div className="flex  gap-2 rounded-md border border-ds-gray-500 px-5 py-2">
           <input
             type="text"
             placeholder="Buscar livro ou autor"
             className="min-w-72 bg-transparent outline-none placeholder:text-ds-gray-300/50"
+            value={search}
+            onChange={(e) => handleSearchBook(e)}
           />
 
           <Image

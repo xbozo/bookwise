@@ -3,6 +3,7 @@ import { fetchAllBooks, fetchBooksByRating } from "@/actions/books";
 import { BookCard } from "@/components/book-card";
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { BookReviewCard } from "./book-review-card";
 
 export const metadata: Metadata = {
@@ -46,7 +47,9 @@ export default async function Home() {
           <div className="flex justify-between">
             <span className="text-sm text-ds-gray-300">Livros Populares</span>
             <div className="flex gap-1 font-semibold text-ds-purple-100">
-              <span>Ver todos</span>
+              <Link href="/explore" className="hover:cursor-pointer">
+                Ver todos
+              </Link>
 
               <Image
                 quality={100}
