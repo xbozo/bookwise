@@ -1,10 +1,11 @@
 "use client";
 
-import { Book } from "@/@types/book";
-import { Category } from "@/@types/category";
 import { Filter } from "@/@types/filter";
 import { fetchAllCategories, fetchBooksByCategory } from "@/actions/books";
 import { BookCard } from "@/components/book-card";
+import { PageTitle } from "@/components/page-title";
+import { Binoculars } from "@phosphor-icons/react";
+import { Book, Category } from "@prisma/client";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FilterBadge } from "./filter-badge";
@@ -89,12 +90,11 @@ export default function Explore() {
   }
 
   return (
-    <div className="flex flex-col gap-10">
+    <>
       <div className="flex justify-between gap-2">
-        <div className="flex items-center gap-3">
-          <Image src="/images/binocles.svg" alt="" width={32} height={32} />
-          <h1 className="text-2xl font-bold leading-6">Explorar</h1>
-        </div>
+        <PageTitle title="Explorar">
+          <Binoculars color="#50B2C0" className="h-8 w-8" />
+        </PageTitle>
 
         <div className="flex  gap-2 rounded-md border border-ds-gray-500 px-5 py-2">
           <input
@@ -106,7 +106,7 @@ export default function Explore() {
           />
 
           <Image
-            src="/images/magnifying-glass.svg"
+            src="/images/icons/magnifying-glass.svg"
             alt=""
             quality={100}
             width={20}
@@ -141,7 +141,7 @@ export default function Explore() {
         )}
       </div>
 
-      <main className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-3">
         {books.map((book) => {
           return (
             <BookCard
@@ -157,7 +157,7 @@ export default function Explore() {
           );
         })}
         <div className=""></div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }

@@ -1,7 +1,7 @@
-import { Book } from "@/@types/book";
+import { Book } from "@prisma/client";
 import Image from "next/image";
 
-export function BookCard({ author, name, cover_url }: Book) {
+export function BookCard({ author, name, cover_url, summary }: Book) {
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">
@@ -28,7 +28,7 @@ export function BookCard({ author, name, cover_url }: Book) {
                     quality={100}
                     width={15}
                     height={15}
-                    src="/images/star-filled.svg"
+                    src="/images/icons/star-filled.svg"
                     alt=""
                     key={i}
                   />
@@ -39,7 +39,7 @@ export function BookCard({ author, name, cover_url }: Book) {
                 quality={100}
                 width={15}
                 height={15}
-                src="/images/star-outline.svg"
+                src="/images/icons/star-outline.svg"
                 alt=""
               />
             </span>

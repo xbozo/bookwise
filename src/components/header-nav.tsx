@@ -51,7 +51,9 @@ export function HeaderNav() {
     <nav className="flex h-full flex-col items-center">
       <ul className="space-y-4">
         {navItems.map((item, index) => {
-          if (!userData && item.href === "/profile") {
+          if (item.href === "profile") {
+            if (!userData) return;
+
             return;
           }
 
@@ -59,7 +61,11 @@ export function HeaderNav() {
             return (
               <li key={index}>
                 <Link
-                  href={item.href}
+                  href={
+                    item.href === "/profile"
+                      ? `/profile/${userData?.user.id}`
+                      : `${item.href}`
+                  }
                   className="flex items-center gap-3 text-start text-ds-gray-100"
                 >
                   <div className="h-6 w-1 rounded-lg bg-gradient-to-t from-ds-purple-100 to-ds-green-100" />
@@ -75,7 +81,11 @@ export function HeaderNav() {
           return (
             <li key={index}>
               <Link
-                href={item.href}
+                href={
+                  item.href === "/profile"
+                    ? `/profile/${userData?.user.id}`
+                    : `${item.href}`
+                }
                 className="flex items-center gap-3 text-start text-ds-gray-400"
               >
                 <div className="h-6 w-1 rounded-lg bg-gradient-to-t from-ds-purple-100 to-ds-green-100 opacity-0" />

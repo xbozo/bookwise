@@ -1,6 +1,7 @@
-import { Book } from "@/@types/book";
 import { fetchAllBooks, fetchBooksByRating } from "@/actions/books";
 import { BookCard } from "@/components/book-card";
+import { PageTitle } from "@/components/page-title";
+import { Book } from "@prisma/client";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,12 +17,16 @@ export default async function Home() {
 
   return (
     <>
-      <div className="flex items-center gap-3">
-        <Image src="/images/chart-line-up.svg" alt="" width={32} height={32} />
-        <h1 className="text-2xl font-bold leading-6">Início</h1>
-      </div>
+      <PageTitle title="Início">
+        <Image
+          width={32}
+          height={32}
+          src="/images/icons/chart-line-up.svg"
+          alt=""
+        />
+      </PageTitle>
 
-      <div className="mt-12 grid grid-cols-5 justify-between gap-20">
+      <div className="grid grid-cols-5 justify-between gap-20">
         <section className="col-span-3  flex flex-col gap-3">
           <span className="text-sm text-ds-gray-300">
             Avaliações mais recentes
@@ -55,7 +60,7 @@ export default async function Home() {
                 quality={100}
                 width={16}
                 height={16}
-                src="/images/arrow-right.svg"
+                src="/images/icons/arrow-right.svg"
                 alt=""
               />
             </div>

@@ -1,4 +1,4 @@
-import { Book } from "@/@types/book";
+import { Book } from "@prisma/client";
 import Image from "next/image";
 
 export function BookReviewCard({ author, name, summary, cover_url }: Book) {

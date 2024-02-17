@@ -1,5 +1,5 @@
+import { HeaderNav } from "@/components/header-nav";
 import { ReactNode } from "react";
-import { HeaderNav } from "./header-nav";
 
 export default function DefaultLayout({ children }: { children: ReactNode }) {
   return (
@@ -10,7 +10,9 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
         <HeaderNav />
       </header>
 
-      <div className="mx-auto mt-10 w-full max-w-7xl">{children}</div>
+      <main className="mx-auto mt-10 flex w-full max-w-7xl flex-col gap-10">
+        {children}
+      </main>
     </div>
   );
 }

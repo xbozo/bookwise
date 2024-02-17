@@ -46,15 +46,16 @@ model Category {
 }
 
 model CategoriesOnBooks {
-  book_id    String
-  categoryId String
+  book_id     String
+  category_id String
 
   book     Book     @relation(fields: [book_id], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
+  category Category @relation(fields: [category_id], references: [id])
 
-  @@id([book_id, categoryId])
+  @@id([book_id, category_id])
   @@index([book_id])
-  @@index([categoryId])
+  @@index([category_id])
+  @@map("categories_on_books")
 }
 
 model Rating {
