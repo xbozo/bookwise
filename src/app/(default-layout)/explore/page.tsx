@@ -149,7 +149,6 @@ export default function Explore() {
               id={book.id}
               name={book.name}
               author={book.author}
-              summary={book.summary}
               cover_url={book.cover_url}
               total_pages={book.total_pages}
               created_at={book.created_at}

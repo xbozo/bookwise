@@ -1,7 +1,12 @@
 import { Book } from "@prisma/client";
 import Image from "next/image";
 
-export function BookCard({ author, name, cover_url, summary }: Book) {
+export function BookCard({
+  author,
+  name,
+  cover_url,
+  summary,
+}: Omit<Book, "summary"> & { summary?: string }) {
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">
@@ -17,10 +22,9 @@ export function BookCard({ author, name, cover_url, summary }: Book) {
 
           <div className="flex flex-col justify-between">
             <div className="flex flex-col">
-              <span>{name}</span>
+              <span className="line-clamp-2 overflow-ellipsis">{name}</span>
               <span className="text-sm text-ds-gray-400">{author}</span>
             </div>
-
             <span className="flex items-start gap-1 fill-ds-purple-100">
               {Array.from({ length: 4 }).map((_, i) => {
                 return (
@@ -46,6 +50,8 @@ export function BookCard({ author, name, cover_url, summary }: Book) {
           </div>
         </div>
       </div>
+
+      {summary && <p>{summary}</p>}
     </div>
   );
 }

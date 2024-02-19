@@ -11,6 +11,7 @@ export async function fetchAllBooks() {
   }
 
   return books;
+  // return w/ overall rating length / ratings
 }
 
 export async function fetchBooksByRating() {
@@ -21,6 +22,8 @@ export async function fetchBooksByRating() {
       },
     },
   });
+
+  // const calculateRate = books.length
 
   if (!books) {
     return [];
@@ -44,7 +47,7 @@ export async function fetchBooksByCategory(filters: Filter[]) {
     where: {
       categories: {
         some: {
-          categoryId: {
+          category_id: {
             in: filters.map((filter) => filter.id?.toString() || ""),
           },
         },

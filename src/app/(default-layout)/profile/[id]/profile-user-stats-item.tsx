@@ -1,16 +1,16 @@
 import Image from "next/image";
 
-type ProfileDetailsCardProps = {
+type ProfileDetailsItemProps = {
   iconSrc: string;
   itemTitle: number | string;
   description: string;
 };
 
-export function ProfileDetailsCard({
+export function ProfileDetailsItem({
   itemTitle,
   description,
   iconSrc,
-}: ProfileDetailsCardProps) {
+}: ProfileDetailsItemProps) {
   return (
     <div className="flex w-full gap-4">
       <Image src={iconSrc} alt="" width={32} height={32} className="h-8 w-8" />

@@ -5,7 +5,7 @@ import { Book } from "@prisma/client";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { BookReviewCard } from "./book-review-card";
+import { HomeBookReviewCard } from "./home-book-review-card";
 
 export const metadata: Metadata = {
   title: "Início",
@@ -34,7 +34,7 @@ export default async function Home() {
 
           {books.map((book) => {
             return (
-              <BookReviewCard
+              <HomeBookReviewCard
                 key={book.id}
                 id={book.id}
                 name={book.name}
@@ -43,6 +43,7 @@ export default async function Home() {
                 cover_url={book.cover_url}
                 total_pages={book.total_pages}
                 created_at={book.created_at}
+                rating_value={1}
               />
             );
           })}
@@ -73,7 +74,6 @@ export default async function Home() {
                 id={book.id}
                 name={book.name}
                 author={book.author}
-                summary={book.summary}
                 cover_url={book.cover_url}
                 total_pages={book.total_pages}
                 created_at={book.created_at}

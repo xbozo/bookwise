@@ -1,7 +1,20 @@
 import { Book } from "@prisma/client";
 import Image from "next/image";
 
-export function BookReviewCard({ author, name, summary, cover_url }: Book) {
+interface HomeBookReviewCardProps extends Omit<Book, "summary"> {
+  summary?: string;
+  rating_description?: string;
+  rating_value: number;
+}
+
+export function HomeBookReviewCard({
+  author,
+  name,
+  summary,
+  rating_description,
+  rating_value,
+  cover_url,
+}: HomeBookReviewCardProps) {
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">
@@ -21,16 +34,24 @@ export function BookReviewCard({ author, name, summary, cover_url }: Book) {
         </div>
 
         <span className="flex items-start gap-1 fill-ds-purple-100">
-          {Array.from({ length: 5 }).map((_, i) => {
-            return (
-              <img
-                key={i}
-                src="/images/star-filled.svg"
-                alt=""
-                className="h-[15px] w-[15px]"
-              />
-            );
-          })}
+          <>
+            {Array.from({ length: rating_value }).map((_, i) => {
+              return (
+                <img
+                  key={i}
+                  src="/images/star-filled.svg"
+                  alt=""
+                  className="h-[15px] w-[15px]"
+                />
+              );
+            })}
+          </>
+
+          <img
+            src="/images/icons/star-filled.svg"
+            alt=""
+            className="h-[15px] w-[15px]"
+          />
         </span>
       </div>
 
@@ -43,9 +64,15 @@ export function BookReviewCard({ author, name, summary, cover_url }: Book) {
             <span className=" text-sm text-ds-gray-300">{author}</span>
           </span>
 
-          <p className="line-clamp-4 text-ellipsis text-sm text-ds-gray-200">
-            {summary}
-          </p>
+          {!rating_description && summary && (
+            <p className="line-clamp-4 text-ellipsis text-sm text-ds-gray-200">
+              {summary}
+            </p>
+          )}
+
+          {rating_description && (
+            <p className="text-sm text-ds-gray-200">{rating_description}</p>
+          )}
         </div>
       </div>
     </div>

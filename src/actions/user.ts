@@ -1,3 +1,5 @@
+"use server";
+
 import { ProfileData } from "@/@types/user-profile";
 import { prisma } from "@/libs/prisma";
 import { getMostFrequentString } from "@/utils/getMostFrequentString";

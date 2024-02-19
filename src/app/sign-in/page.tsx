@@ -6,8 +6,6 @@ import { useEffect } from "react";
 
 export default function SignIn() {
   const { data: userData, status: sessionStatus } = useSession();
-  console.log(userData);
-  // console.log(status);
 
   const router = useRouter();
 
