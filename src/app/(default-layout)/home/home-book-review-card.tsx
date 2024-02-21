@@ -2,6 +2,7 @@ import { RatedBook } from "@/@types/rated-book";
 import { formatDistanceToNowFn } from "@/utils/formatDistanceToNow";
 import { Book } from "@prisma/client";
 import Image from "next/image";
+import Link from "next/link";
 
 interface HomeBookReviewCardProps extends Omit<Book, "summary"> {
   summary?: string;
@@ -21,7 +22,10 @@ export function HomeBookReviewCard({
     <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-gradient-to-r from-ds-green-100 to-ds-purple-100">
+          <Link
+            href={`/profile/${bookRatingData.user.id}`}
+            className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-gradient-to-r from-ds-green-100 to-ds-purple-100"
+          >
             <Image
               src={bookRatingData.user.avatar_url ?? "github.com/xbozo.png"}
               alt=""
@@ -29,12 +33,15 @@ export function HomeBookReviewCard({
               height={32}
               className="h-8 w-8 rounded-full"
             />
-          </div>
+          </Link>
 
-          <div className="flex flex-col">
+          <Link
+            href={`/profile/${bookRatingData.user.id}`}
+            className="flex flex-col"
+          >
             <span>{bookRatingData.user.name}</span>
             <span className="text-sm text-ds-gray-400">{formattedDate}</span>
-          </div>
+          </Link>
         </div>
 
         <span className="flex items-start gap-1 fill-ds-purple-100">

@@ -39,7 +39,7 @@ export function ProfileUserStatsCard({ profile }: { profile: ProfileData }) {
 
         <ProfileDetailsItem
           iconSrc="/images/icons/authors-icon.svg"
-          itemTitle={profile.readAuthors}
+          itemTitle={profile.readAuthors.length}
           description="Autores lidos"
         />
 

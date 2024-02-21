@@ -7,7 +7,9 @@ import Image from "next/image";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ProfileBookReviewCard } from "./profile-book-review-card";
+import { ProfileBookReviewCardSkeleton } from "./profile-book-review-card-skeleton";
 import { ProfileUserStatsCard } from "./profile-user-stats-card";
+import { ProfileUserStatsCardSkeleton } from "./profile-user-stats-card-skeleton";
 import { SearchRatedBooks } from "./search-rated-books";
 
 export default function Profile() {
@@ -47,10 +49,6 @@ export default function Profile() {
     return setFilteredBooks(profile?.ratings || null);
   }, [search, profile]);
 
-  if (!profile) {
-    return <>carregando</>;
-  }
-
   return (
     <>
       <PageTitle title="Perfil">
@@ -62,23 +60,39 @@ export default function Profile() {
           <SearchRatedBooks />
 
           <div className="flex flex-col gap-5">
-            {(filteredBooks || profile.ratings)?.map((rating) => (
-              <ProfileBookReviewCard
-                rating_description={rating.description}
-                rating_value={rating.rate}
-                author={rating.book.author}
-                cover_url={rating.book.cover_url}
-                name={rating.book.name}
-                id={rating.book.id}
-                created_at={rating.book.created_at}
-                total_pages={rating.book.total_pages}
-                key={rating.id}
-              />
-            ))}
+            {!profile ? (
+              <>
+                {Array.from({ length: 3 }).map((_, i) => {
+                  return <ProfileBookReviewCardSkeleton key={i} />;
+                })}
+              </>
+            ) : (
+              <>
+                {(filteredBooks || profile.ratings)?.map((rating) => (
+                  <ProfileBookReviewCard
+                    rating_description={rating.description}
+                    rating_value={rating.rate}
+                    author={rating.book.author}
+                    cover_url={rating.book.cover_url}
+                    name={rating.book.name}
+                    id={rating.book.id}
+                    created_at={rating.book.created_at}
+                    total_pages={rating.book.total_pages}
+                    key={rating.id}
+                  />
+                ))}
+              </>
+            )}
           </div>
         </section>
 
-        <ProfileUserStatsCard profile={profile} />
+        {!profile ? (
+          <>
+            <ProfileUserStatsCardSkeleton />
+          </>
+        ) : (
+          <ProfileUserStatsCard profile={profile} />
+        )}
       </main>
     </>
   );

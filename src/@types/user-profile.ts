@@ -18,6 +18,6 @@ export type ProfileData = {
   ratings: ProfileRating[] | null;
   readPages: number;
   ratedBooks: number;
-  readAuthors: number;
+  readAuthors: string[];
   mostReadCategory?: string;
 };

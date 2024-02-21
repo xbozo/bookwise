@@ -11,7 +11,6 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import signInIcon from "public/images/sign-in.svg";
 import { useEffect, useState } from "react";
 
 const _navItems = [
@@ -56,10 +55,6 @@ export function HeaderNav() {
 
             return;
           }
-
-          console.log("pathname", pathname);
-          console.log("href", item.href);
-          console.log(pathname.includes(item.href));
 
           if (pathname.includes(item.href)) {
             return (
