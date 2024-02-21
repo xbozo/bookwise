@@ -32,6 +32,24 @@ export async function fetchBooksByRating() {
   return books;
 }
 
+export async function fetchRatedBooks() {
+  const books = await prisma.rating.findMany({
+    orderBy: {
+      created_at: "desc",
+    },
+    include: {
+      book: true,
+      user: true,
+    },
+  });
+
+  if (!books) {
+    return [];
+  }
+
+  return books;
+}
+
 export async function fetchBooksByCategory(filters: Filter[]) {
   if (!filters) {
     return;

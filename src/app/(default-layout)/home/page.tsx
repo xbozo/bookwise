@@ -1,4 +1,5 @@
-import { fetchAllBooks, fetchBooksByRating } from "@/actions/books";
+import { RatedBook } from "@/@types/rated-book";
+import { fetchBooksByRating, fetchRatedBooks } from "@/actions/books";
 import { BookCard } from "@/components/book-card";
 import { PageTitle } from "@/components/page-title";
 import { Book } from "@prisma/client";
@@ -12,8 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const books: Book[] = await fetchAllBooks();
   const popularBooks: Book[] = await fetchBooksByRating();
+  const ratedBooks: RatedBook[] = await fetchRatedBooks();
 
   return (
     <>
@@ -32,18 +33,11 @@ export default async function Home() {
             Avaliações mais recentes
           </span>
 
-          {books.map((book) => {
+          {ratedBooks.map((ratingData) => {
             return (
               <HomeBookReviewCard
-                key={book.id}
-                id={book.id}
-                name={book.name}
-                author={book.author}
-                summary={book.summary}
-                cover_url={book.cover_url}
-                total_pages={book.total_pages}
-                created_at={book.created_at}
-                rating_value={1}
+                key={ratingData.id}
+                bookRatingData={ratingData}
               />
             );
           })}
