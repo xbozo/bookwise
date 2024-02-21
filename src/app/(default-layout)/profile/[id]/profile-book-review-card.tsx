@@ -1,3 +1,4 @@
+import { formatDistanceToNowFn } from "@/utils/formatDistanceToNow";
 import { Book } from "@prisma/client";
 import Image from "next/image";
 
@@ -12,10 +13,15 @@ export function ProfileBookReviewCard({
   rating_description,
   rating_value,
   cover_url,
+  created_at,
 }: ProfileBookReviewCardProps) {
+  const formattedDate = formatDistanceToNowFn(created_at);
+
   return (
     <div className="space-y-3">
-      <span className="text-sm leading-4 text-ds-gray-300">Há 2 dias</span>
+      <span className="text-sm leading-4 text-ds-gray-300">
+        {formattedDate}
+      </span>
 
       <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
         <div className="flex gap-6">

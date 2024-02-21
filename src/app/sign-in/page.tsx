@@ -1,23 +1,19 @@
-"use client";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { SignInOptions } from "./sign-in-options";
 
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+export const metadata: Metadata = {
+  title: "Entrar",
+};
 
-export default function SignIn() {
-  const { data: userData, status: sessionStatus } = useSession();
+export default async function SignIn() {
+  const session = await getServerSession(authOptions);
 
-  const router = useRouter();
-
-  useEffect(() => {
-    document.title = "Entrar | Bookwise";
-  }, []);
-
-  useEffect(() => {
-    if (sessionStatus === "authenticated") {
-      return router.push("/home");
-    }
-  }, [sessionStatus]);
+  if (session) {
+    return redirect("/home");
+  }
 
   return (
     <div className="flex h-[calc(100vh-40px)]">
@@ -36,19 +32,7 @@ export default function SignIn() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <button onClick={() => signIn("google")}>
-              <img src="/images/google-logo.svg" alt="Entrar com Google" />
-            </button>
-
-            <button onClick={() => signIn("github")}>
-              <img src="/images/github-logo.svg" alt="Entrar com GitHub" />
-            </button>
-
-            <button>
-              <img src="/images/guest-logo.svg" alt="Acessar como visitante" />
-            </button>
-          </div>
+          <SignInOptions />
         </div>
       </section>
     </div>

@@ -35,23 +35,28 @@ export function HomeBookReviewCard({
 
         <span className="flex items-start gap-1 fill-ds-purple-100">
           <>
-            {Array.from({ length: rating_value }).map((_, i) => {
+            {Array.from({ length: 5 }).map((_, i) => {
+              if (i < rating_value) {
+                return (
+                  <img
+                    key={i}
+                    src="/images/icons/star-filled.svg"
+                    alt=""
+                    className="h-[15px] w-[15px]"
+                  />
+                );
+              }
+
               return (
                 <img
                   key={i}
-                  src="/images/star-filled.svg"
+                  src="/images/icons/star-outline.svg"
                   alt=""
                   className="h-[15px] w-[15px]"
                 />
               );
             })}
           </>
-
-          <img
-            src="/images/icons/star-filled.svg"
-            alt=""
-            className="h-[15px] w-[15px]"
-          />
         </span>
       </div>
 

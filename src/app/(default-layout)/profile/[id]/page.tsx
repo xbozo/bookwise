@@ -62,7 +62,6 @@ export default function Profile() {
           <SearchRatedBooks />
 
           <div className="flex flex-col gap-5">
-            {/* Renderiza os livros filtrados se houver, senão, renderiza todos os livros */}
             {(filteredBooks || profile.ratings)?.map((rating) => (
               <ProfileBookReviewCard
                 rating_description={rating.description}
