@@ -6,7 +6,8 @@ export function BookCard({
   name,
   cover_url,
   summary,
-}: Omit<Book, "summary"> & { summary?: string }) {
+  average_rating,
+}: Omit<Book, "summary"> & { summary?: string; average_rating?: number }) {
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">
@@ -27,14 +28,23 @@ export function BookCard({
             </div>
             <span className="flex items-start gap-1 fill-ds-purple-100">
               {Array.from({ length: 4 }).map((_, i) => {
+                if (average_rating && i < average_rating) {
+                  return (
+                    <img
+                      key={i}
+                      src="/images/icons/star-filled.svg"
+                      alt=""
+                      className="h-[15px] w-[15px]"
+                    />
+                  );
+                }
+
                 return (
-                  <Image
-                    quality={100}
-                    width={15}
-                    height={15}
-                    src="/images/icons/star-filled.svg"
-                    alt=""
+                  <img
                     key={i}
+                    src="/images/icons/star-outline.svg"
+                    alt=""
+                    className="h-[15px] w-[15px]"
                   />
                 );
               })}

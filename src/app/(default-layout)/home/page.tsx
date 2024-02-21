@@ -1,8 +1,8 @@
+import { BookWithRating } from "@/@types/book-with-rating";
 import { RatedBook } from "@/@types/rated-book";
 import { fetchBooksByRating, fetchRatedBooks } from "@/actions/books";
 import { BookCard } from "@/components/book-card";
 import { PageTitle } from "@/components/page-title";
-import { Book } from "@prisma/client";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const popularBooks: Book[] = await fetchBooksByRating();
+  const popularBooks: BookWithRating[] = await fetchBooksByRating();
   const ratedBooks: RatedBook[] = await fetchRatedBooks();
 
   return (
@@ -71,6 +71,7 @@ export default async function Home() {
                 cover_url={book.cover_url}
                 total_pages={book.total_pages}
                 created_at={book.created_at}
+                average_rating={book.average_rating}
               />
             );
           })}

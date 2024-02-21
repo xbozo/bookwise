@@ -1,18 +1,20 @@
 "use client";
 
+import { BookWithRating } from "@/@types/book-with-rating";
 import { Filter } from "@/@types/filter";
 import { fetchAllCategories, fetchBooksByCategory } from "@/actions/books";
 import { BookCard } from "@/components/book-card";
 import { PageTitle } from "@/components/page-title";
 import { Binoculars } from "@phosphor-icons/react";
-import { Book, Category } from "@prisma/client";
+import { Category } from "@prisma/client";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useState } from "react";
+import { BookSkeleton } from "./book-skeleton";
 import { FilterBadge } from "./filter-badge";
 import { FilterBadgeSkeleton } from "./filter-badge-skeleton";
 
 export default function Explore() {
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<BookWithRating[]>([]);
   const [search, setSearch] = useState("");
 
   const [categories, setCategories] = useState<Category[]>([
@@ -142,20 +144,30 @@ export default function Explore() {
       </div>
 
       <div className="grid grid-cols-3 gap-3">
-        {books.map((book) => {
-          return (
-            <BookCard
-              key={book.id}
-              id={book.id}
-              name={book.name}
-              author={book.author}
-              cover_url={book.cover_url}
-              total_pages={book.total_pages}
-              created_at={book.created_at}
-            />
-          );
-        })}
-        <div className=""></div>
+        {books.length === 0 ? (
+          <>
+            {Array.from({ length: 15 }).map((_, i) => {
+              return <BookSkeleton key={i} />;
+            })}
+          </>
+        ) : (
+          <>
+            {books.map((book) => {
+              return (
+                <BookCard
+                  key={book.id}
+                  id={book.id}
+                  name={book.name}
+                  author={book.author}
+                  cover_url={book.cover_url}
+                  total_pages={book.total_pages}
+                  created_at={book.created_at}
+                  average_rating={book.average_rating}
+                />
+              );
+            })}
+          </>
+        )}
       </div>
     </>
   );

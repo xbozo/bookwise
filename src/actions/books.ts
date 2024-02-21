@@ -2,6 +2,7 @@
 
 import { Filter } from "@/@types/filter";
 import { prisma } from "@/libs/prisma";
+import { mapBooksAverageRating } from "@/utils/mapBooksAverageRating";
 
 export async function fetchAllBooks() {
   const books = await prisma.book.findMany();
@@ -11,11 +12,17 @@ export async function fetchAllBooks() {
   }
 
   return books;
-  // return w/ overall rating length / ratings
 }
 
 export async function fetchBooksByRating() {
-  const books = await prisma.book.findMany({
+  const booksWithAverageRating = await prisma.book.findMany({
+    include: {
+      ratings: {
+        select: {
+          rate: true,
+        },
+      },
+    },
     orderBy: {
       ratings: {
         _count: "desc",
@@ -23,13 +30,15 @@ export async function fetchBooksByRating() {
     },
   });
 
-  // const calculateRate = books.length
+  const booksWithAverageRatingMapped = mapBooksAverageRating(
+    booksWithAverageRating,
+  );
 
-  if (!books) {
+  if (!booksWithAverageRatingMapped) {
     return [];
   }
 
-  return books;
+  return booksWithAverageRatingMapped;
 }
 
 export async function fetchRatedBooks() {
@@ -56,12 +65,12 @@ export async function fetchBooksByCategory(filters: Filter[]) {
   }
 
   if (filters.some((filter) => filter.id === "all" && filter.name === "Tudo")) {
-    const books = await prisma.book.findMany();
+    const books = fetchBooksByRating();
 
     return books;
   }
 
-  const books = await prisma.book.findMany({
+  const filteredBooks = await prisma.book.findMany({
     where: {
       categories: {
         some: {
@@ -71,9 +80,18 @@ export async function fetchBooksByCategory(filters: Filter[]) {
         },
       },
     },
+    include: {
+      ratings: {
+        select: {
+          rate: true,
+        },
+      },
+    },
   });
 
-  return books;
+  const booksWithRating = mapBooksAverageRating(filteredBooks);
+
+  return booksWithRating;
 }
 
 export async function fetchBook({ bookId }: { bookId: string }) {
