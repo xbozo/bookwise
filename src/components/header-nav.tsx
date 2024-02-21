@@ -57,7 +57,11 @@ export function HeaderNav() {
             return;
           }
 
-          if (item.href === pathname) {
+          console.log("pathname", pathname);
+          console.log("href", item.href);
+          console.log(pathname.includes(item.href));
+
+          if (pathname.includes(item.href)) {
             return (
               <li key={index}>
                 <Link
