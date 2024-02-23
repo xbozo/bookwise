@@ -16,7 +16,7 @@ export default async function SignIn() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-40px)]">
+    <div className="flex h-screen p-5">
       <section className="relative flex w-1/3 items-center justify-center  rounded-xl bg-gradient-to-tr from-ds-green-200 to-ds-purple-200">
         <img alt="" src="/logo.svg" />
 

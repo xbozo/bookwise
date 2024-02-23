@@ -1,4 +1,4 @@
-export function BookSkeleton() {
+export function BookCardSkeleton() {
   return (
     <div className="flex h-[138px] w-[418px] rounded-lg bg-ds-gray-700 p-6">
       <div className="flex justify-between">

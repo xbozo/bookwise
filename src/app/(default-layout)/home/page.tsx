@@ -1,12 +1,13 @@
 import { BookWithRating } from "@/@types/book-with-rating";
 import { RatedBook } from "@/@types/rated-book";
 import { fetchBooksByRating, fetchRatedBooks } from "@/actions/books";
-import { BookCard } from "@/components/book-card";
+import { BookCardSkeleton } from "@/components/book-card/book-card-skeleton";
 import { PageTitle } from "@/components/page-title";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { HomeBookReviewCard } from "./home-book-review-card";
+import { PopularBooks } from "./popular-books";
 
 export const metadata: Metadata = {
   title: "Início",
@@ -61,20 +62,19 @@ export default async function Home() {
             </div>
           </div>
 
-          {popularBooks.map((book) => {
-            return (
-              <BookCard
-                key={book.id}
-                id={book.id}
-                name={book.name}
-                author={book.author}
-                cover_url={book.cover_url}
-                total_pages={book.total_pages}
-                created_at={book.created_at}
-                average_rating={book.average_rating}
-              />
-            );
-          })}
+          {popularBooks.length === 0 ? (
+            <>
+              {Array.from({ length: 5 }).map((_, i) => {
+                return <BookCardSkeleton key={i} />;
+              })}
+            </>
+          ) : (
+            <>
+              {popularBooks.map((book) => {
+                return <PopularBooks book={book} />;
+              })}
+            </>
+          )}
         </section>
       </div>
     </>

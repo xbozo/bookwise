@@ -3,13 +3,13 @@
 import { BookWithRating } from "@/@types/book-with-rating";
 import { Filter } from "@/@types/filter";
 import { fetchAllCategories, fetchBooksByCategory } from "@/actions/books";
-import { BookCard } from "@/components/book-card";
+import { BookCard } from "@/components/book-card/book-card";
 import { PageTitle } from "@/components/page-title";
 import { Binoculars } from "@phosphor-icons/react";
 import { Category } from "@prisma/client";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useState } from "react";
-import { BookSkeleton } from "./book-skeleton";
+import { BookCardSkeleton } from "../../../components/book-card/book-card-skeleton";
 import { FilterBadge } from "./filter-badge";
 import { FilterBadgeSkeleton } from "./filter-badge-skeleton";
 
@@ -147,7 +147,7 @@ export default function Explore() {
         {books.length === 0 ? (
           <>
             {Array.from({ length: 15 }).map((_, i) => {
-              return <BookSkeleton key={i} />;
+              return <BookCardSkeleton key={i} />;
             })}
           </>
         ) : (
@@ -163,6 +163,8 @@ export default function Explore() {
                   total_pages={book.total_pages}
                   created_at={book.created_at}
                   average_rating={book.average_rating}
+                  categories={book.categories}
+                  ratings={book.ratings}
                 />
               );
             })}

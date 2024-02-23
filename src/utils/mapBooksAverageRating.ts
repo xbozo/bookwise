@@ -23,6 +23,8 @@ export function mapBooksAverageRating(
       cover_url: book.cover_url,
       total_pages: book.total_pages,
       created_at: book.created_at,
+      categories: book.categories,
+      ratings: book.ratings,
       average_rating: averageRating,
     };
   });

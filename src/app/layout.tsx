@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="pt">
       <body
-        className={`${nunitoSans.className} min-h-screen bg-ds-gray-800 p-5 text-ds-gray-100 antialiased`}
+        className={`${nunitoSans.className} min-h-screen bg-ds-gray-800 text-ds-gray-100 antialiased`}
       >
         <Providers>{children}</Providers>
       </body>

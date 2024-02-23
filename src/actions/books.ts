@@ -18,8 +18,19 @@ export async function fetchBooksByRating() {
   const booksWithAverageRating = await prisma.book.findMany({
     include: {
       ratings: {
+        include: {
+          user: {
+            select: {
+              avatar_url: true,
+              name: true,
+              id: true,
+            },
+          },
+        },
+      },
+      categories: {
         select: {
-          rate: true,
+          category: true,
         },
       },
     },
