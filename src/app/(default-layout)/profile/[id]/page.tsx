@@ -1,7 +1,9 @@
 "use client";
 
-import { ProfileData } from "@/@types/user-profile";
-import { fetchUserProfile } from "@/actions/user";
+import {
+  ProfileData,
+  fetchUserProfile,
+} from "@/actions/users/fetchUserProfile";
 import { PageTitle } from "@/components/page-title";
 import Image from "next/image";
 import { useParams, useSearchParams } from "next/navigation";
@@ -36,9 +38,13 @@ export default function Profile() {
 
   useEffect(() => {
     (async () => {
-      const userProfile = await fetchUserProfile(String(params.id));
+      const userProfile: ProfileData | null = await fetchUserProfile(
+        String(params.id),
+      );
 
-      setProfile(userProfile);
+      if (userProfile) {
+        setProfile(userProfile as ProfileData);
+      }
     })();
   }, []);
 

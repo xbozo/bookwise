@@ -1,12 +1,43 @@
 "use server";
 
-import { ProfileData } from "@/@types/user-profile";
 import { prisma } from "@/libs/prisma";
 import { getMostFrequentString } from "@/utils/getMostFrequentString";
 
+export type ProfileData = {
+  id: string;
+  email: string;
+  name: string;
+  avatar_url: string | null;
+  created_at: Date;
+  readPages: number;
+  ratedBooks: number;
+  readAuthors: string[];
+  mostReadCategory: string | null;
+  ratings: {
+    created_at: Date;
+    description: string;
+    id: string;
+    rate: number;
+    book: {
+      name: string;
+      id: string;
+      author: string;
+      cover_url: string;
+      created_at: Date;
+      total_pages: number;
+      categories: {
+        category: {
+          id: string;
+          name: string;
+        };
+      }[];
+    };
+  }[];
+};
+
 export async function fetchUserProfile(
   userId: string,
-): Promise<ProfileData | any> {
+): Promise<ProfileData | null> {
   const profile = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -32,7 +63,7 @@ export async function fetchUserProfile(
   });
 
   if (!profile) {
-    return {};
+    return null;
   }
 
   const ratedBooks = profile?.ratings.length;

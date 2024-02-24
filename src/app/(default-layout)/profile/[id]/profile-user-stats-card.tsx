@@ -1,4 +1,4 @@
-import { ProfileData } from "@/@types/user-profile";
+import { ProfileData } from "@/actions/users/fetchUserProfile";
 import Image from "next/image";
 import { ProfileDetailsItem } from "./profile-user-stats-item";
 
