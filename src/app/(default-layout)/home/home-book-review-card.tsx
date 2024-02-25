@@ -1,15 +1,7 @@
-import { RatedBook } from "@/@types/rated-book";
+import { RatedBook } from "@/actions/books/fetchRatedBooks";
 import { formatDistanceToNowFn } from "@/utils/formatDistanceToNow";
-import { Book } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-
-interface HomeBookReviewCardProps extends Omit<Book, "summary"> {
-  summary?: string;
-  rating_description?: string;
-  rating_value: number;
-  bookData: RatedBook;
-}
 
 export function HomeBookReviewCard({
   bookRatingData,
@@ -26,13 +18,23 @@ export function HomeBookReviewCard({
             href={`/profile/${bookRatingData.user.id}`}
             className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-gradient-to-r from-ds-green-100 to-ds-purple-100"
           >
-            <Image
-              src={bookRatingData.user.avatar_url ?? "github.com/xbozo.png"}
-              alt=""
-              width={32}
-              height={32}
-              className="h-8 w-8 rounded-full"
-            />
+            {bookRatingData.user.avatar_url ? (
+              <Image
+                src={bookRatingData.user.avatar_url}
+                alt=""
+                width={32}
+                height={32}
+                className="h-8 w-8 rounded-full"
+              />
+            ) : (
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-ds-gray-800">
+                <img
+                  src="/images/icons/user.svg"
+                  alt={`Foto de Usuário`}
+                  className="h-6 w-6 text-ds-gray-100"
+                />
+              </div>
+            )}
           </Link>
 
           <Link

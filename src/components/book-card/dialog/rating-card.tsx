@@ -14,13 +14,23 @@ export function RatingCard({
       <div className="flex justify-between">
         <div className="flex gap-4">
           <div className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-gradient-to-r from-ds-green-100 to-ds-purple-100">
-            <Image
-              src={ratingDetails.user.avatar_url}
-              width={40}
-              height={40}
-              alt={`Usuário ${ratingDetails.user.name}`}
-              className="rounded-full"
-            />
+            {ratingDetails.user.avatar_url ? (
+              <Image
+                src={ratingDetails.user.avatar_url}
+                width={40}
+                height={40}
+                alt={`Usuário ${ratingDetails.user.name}`}
+                className="rounded-full"
+              />
+            ) : (
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-ds-gray-800">
+                <img
+                  src="/images/icons/user.svg"
+                  alt={`Usuário ${ratingDetails.user.name}`}
+                  className="h-8 w-8 text-ds-gray-100"
+                />
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col">

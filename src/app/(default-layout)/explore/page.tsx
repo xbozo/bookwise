@@ -1,8 +1,9 @@
 "use client";
 
-import { BookWithRating } from "@/@types/book-with-rating";
+import { BookWithRatingsAndCategories } from "@/@types/book-with-ratings-and-categories";
 import { Filter } from "@/@types/filter";
-import { fetchAllCategories, fetchBooksByCategory } from "@/actions/books";
+import { fetchAllCategories } from "@/actions/books/fetchAllCategories";
+import { fetchBooksByCategory } from "@/actions/books/fetchBooksByCategory";
 import { BookCard } from "@/components/book-card/book-card";
 import { PageTitle } from "@/components/page-title";
 import { Binoculars } from "@phosphor-icons/react";
@@ -14,7 +15,7 @@ import { FilterBadge } from "./filter-badge";
 import { FilterBadgeSkeleton } from "./filter-badge-skeleton";
 
 export default function Explore() {
-  const [books, setBooks] = useState<BookWithRating[]>([]);
+  const [books, setBooks] = useState<BookWithRatingsAndCategories[]>([]);
   const [search, setSearch] = useState("");
 
   const [categories, setCategories] = useState<Category[]>([
@@ -153,20 +154,7 @@ export default function Explore() {
         ) : (
           <>
             {books.map((book) => {
-              return (
-                <BookCard
-                  key={book.id}
-                  id={book.id}
-                  name={book.name}
-                  author={book.author}
-                  cover_url={book.cover_url}
-                  total_pages={book.total_pages}
-                  created_at={book.created_at}
-                  average_rating={book.average_rating}
-                  categories={book.categories}
-                  ratings={book.ratings}
-                />
-              );
+              return <BookCard bookData={book} isExploreLayout />;
             })}
           </>
         )}

@@ -1,26 +1,16 @@
-import { Category } from "@/@types/book-with-rating";
-import { RatingWithProfile } from "@/@types/rating-with-profile";
+import { BookWithRatingsAndCategories } from "@/@types/book-with-ratings-and-categories";
 import { X } from "@phosphor-icons/react";
-import { Book } from "@prisma/client";
 import * as Dialog from "@radix-ui/react-dialog";
 import Image from "next/image";
 import { AvaliateButton } from "./dialog/avaliate-button";
 import { RatingCard } from "./dialog/rating-card";
 
 export function BookCard({
-  author,
-  name,
-  cover_url,
-  summary,
-  average_rating,
-  ratings,
-  total_pages,
-  categories,
-}: Omit<Book, "summary"> & {
-  summary?: string;
-  average_rating?: number;
-  categories: Category[];
-  ratings: RatingWithProfile[];
+  bookData,
+  isExploreLayout,
+}: {
+  bookData: BookWithRatingsAndCategories;
+  isExploreLayout?: boolean;
 }) {
   return (
     <Dialog.Root>
@@ -31,20 +21,27 @@ export function BookCard({
               <Image
                 quality={100}
                 alt=""
-                src={cover_url}
-                width={64}
-                height={94}
+                src={bookData.cover_url}
+                width={isExploreLayout ? 108 : 64}
+                height={isExploreLayout ? 152 : 94}
                 className="rounded-lg"
               />
 
               <div className="flex flex-col justify-between">
                 <div className="flex flex-col">
-                  <span className="line-clamp-2 overflow-ellipsis">{name}</span>
-                  <span className="text-sm text-ds-gray-400">{author}</span>
+                  <span className="line-clamp-2 overflow-ellipsis">
+                    {bookData.name}
+                  </span>
+                  <span className="text-sm text-ds-gray-400">
+                    {bookData.author}
+                  </span>
                 </div>
                 <span className="flex items-start gap-1 fill-ds-purple-100">
                   {Array.from({ length: 5 }).map((_, i) => {
-                    if (average_rating && i < average_rating) {
+                    if (
+                      bookData.average_rating &&
+                      i < bookData.average_rating
+                    ) {
                       return (
                         <img
                           key={i}
@@ -69,7 +66,7 @@ export function BookCard({
             </div>
           </div>
 
-          {summary && <p>{summary}</p>}
+          {!isExploreLayout && <p>{bookData.summary}</p>}
         </div>
       </Dialog.Trigger>
 
@@ -85,20 +82,30 @@ export function BookCard({
 
               <div className="space-y-10 rounded-md bg-ds-gray-700 px-8 py-6">
                 <div className="flex gap-8">
-                  <Image height={242} width={171} alt="" src={cover_url} />
+                  <Image
+                    height={242}
+                    width={171}
+                    alt=""
+                    src={bookData.cover_url}
+                  />
 
                   <div className="flex flex-col justify-between">
                     <div className="flex flex-col flex-wrap gap-2">
-                      <h2 className="text-lg font-bold leading-6">{name}</h2>
+                      <h2 className="text-lg font-bold leading-6">
+                        {bookData.name}
+                      </h2>
                       <span className="leading-6 text-ds-gray-300">
-                        {author}
+                        {bookData.author}
                       </span>
                     </div>
 
                     <div className="flex flex-col gap-1">
                       <span className="flex items-start gap-1 fill-ds-purple-100">
                         {Array.from({ length: 5 }).map((_, i) => {
-                          if (average_rating && i < average_rating) {
+                          if (
+                            bookData.average_rating &&
+                            i < bookData.average_rating
+                          ) {
                             return (
                               <img
                                 key={i}
@@ -121,13 +128,13 @@ export function BookCard({
                       </span>
 
                       <span className="text-sm text-ds-gray-400">
-                        {ratings.length === 1 ? (
+                        {bookData.ratings.length === 1 ? (
                           <>
-                            {ratings.length + " "}
+                            {bookData.ratings.length + " "}
                             avaliação
                           </>
                         ) : (
-                          <>{ratings.length + " "} avaliações</>
+                          <>{bookData.ratings.length + " "} avaliações</>
                         )}
                       </span>
                     </div>
@@ -148,9 +155,9 @@ export function BookCard({
                       <div className="flex flex-col flex-wrap">
                         <h4 className="text-sm text-ds-gray-400">Categoria</h4>
                         <strong>
-                          {categories.map((categoryItem, i) => {
+                          {bookData.categories.map((categoryItem, i) => {
                             const separator =
-                              i < categories.length - 1 ? ", " : "";
+                              i < bookData.categories.length - 1 ? ", " : "";
 
                             return (
                               <span key={categoryItem.category.id}>
@@ -174,7 +181,7 @@ export function BookCard({
 
                       <div className="flex flex-col flex-wrap">
                         <h4 className="text-sm text-ds-gray-400">Páginas</h4>
-                        <strong>{total_pages}</strong>
+                        <strong>{bookData.total_pages}</strong>
                       </div>
                     </div>
                   </div>
@@ -190,8 +197,8 @@ export function BookCard({
               </div>
 
               <section className="flex flex-col gap-3">
-                {ratings.map((ratingDetails, i) => {
-                  return <RatingCard ratingDetails={ratingDetails} />;
+                {bookData.ratings.map((ratingDetails, i) => {
+                  return <RatingCard ratingDetails={ratingDetails} key={i} />;
                 })}
               </section>
             </div>

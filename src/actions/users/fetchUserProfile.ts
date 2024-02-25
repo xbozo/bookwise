@@ -88,12 +88,7 @@ export async function fetchUserProfile(
     : null;
 
   const profileData = {
-    id: profile?.id,
-    email: profile?.email,
-    name: profile?.name,
-    avatar_url: profile?.avatar_url,
-    created_at: profile?.created_at,
-    ratings: profile?.ratings,
+    ...profile,
     readPages,
     ratedBooks,
     readAuthors,

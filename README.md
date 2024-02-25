@@ -1,3 +1,3 @@
 ## To-do
 
-- Add skeletons.
+- avatar_url fallback

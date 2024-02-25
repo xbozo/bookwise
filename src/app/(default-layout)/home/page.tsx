@@ -1,6 +1,6 @@
-import { BookWithRating } from "@/@types/book-with-rating";
-import { RatedBook } from "@/@types/rated-book";
-import { fetchBooksByRating, fetchRatedBooks } from "@/actions/books";
+import { BookWithRatingsAndCategories } from "@/@types/book-with-ratings-and-categories";
+import { fetchBooksByRating } from "@/actions/books/fetchBooksByRating";
+import { RatedBook, fetchRatedBooks } from "@/actions/books/fetchRatedBooks";
 import { BookCardSkeleton } from "@/components/book-card/book-card-skeleton";
 import { PageTitle } from "@/components/page-title";
 import { Metadata } from "next";
@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const popularBooks: BookWithRating[] = await fetchBooksByRating();
+  const popularBooks: BookWithRatingsAndCategories[] =
+    await fetchBooksByRating();
   const ratedBooks: RatedBook[] = await fetchRatedBooks();
 
   return (
@@ -70,8 +71,8 @@ export default async function Home() {
             </>
           ) : (
             <>
-              {popularBooks.map((book) => {
-                return <PopularBooks book={book} />;
+              {popularBooks.map((book, i) => {
+                return <PopularBooks book={book} key={i} />;
               })}
             </>
           )}

@@ -1,4 +1,4 @@
-function calculateAverageBookRate(ratings: number[]): number {
+export function calculateAverageBookRate(ratings: number[]): number {
   if (ratings.length === 0) {
     return 0;
   }

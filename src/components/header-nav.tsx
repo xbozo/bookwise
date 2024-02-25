@@ -10,7 +10,7 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const _navItems = [
@@ -36,6 +36,7 @@ export function HeaderNav() {
   const { data: userData } = useSession();
 
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const isLogged = true;
@@ -46,14 +47,20 @@ export function HeaderNav() {
     }
   }, []);
 
+  function handleSignOut() {
+    signOut();
+
+    router.refresh();
+  }
+
   return (
     <nav className="flex h-full flex-col items-center">
       <ul className="space-y-4">
         {navItems.map((item, index) => {
-          if (item.href === "profile") {
-            if (!userData) return;
-
-            return;
+          if (item.href === "/profile") {
+            if (!userData) {
+              return;
+            }
           }
 
           if (pathname.includes(item.href)) {
@@ -101,20 +108,30 @@ export function HeaderNav() {
       {userData ? (
         <div className="mt-auto flex items-center gap-3">
           <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-gradient-to-r from-ds-green-100 to-ds-purple-100">
-            <Image
-              src={userData.user.avatar_url}
-              width={32}
-              height={32}
-              alt="Usuário"
-              className="rounded-full"
-            />
+            {userData.user.avatar_url ? (
+              <Image
+                src={userData.user.avatar_url}
+                width={32}
+                height={32}
+                alt="Usuário"
+                className="rounded-full"
+              />
+            ) : (
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-ds-gray-800">
+                <img
+                  src="/images/icons/user.svg"
+                  alt={`Foto de Usuário`}
+                  className="h-6 w-6 text-ds-gray-100"
+                />
+              </div>
+            )}
           </div>
 
           <span className="font-sm leading-4 text-ds-gray-200">
             {userData.user.name}
           </span>
 
-          <button onClick={() => signOut()}>
+          <button onClick={handleSignOut}>
             <SignOut
               color="#F75A68"
               className="hover:brightness-75"

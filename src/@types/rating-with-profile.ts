@@ -1,9 +1,3 @@
-type User = {
-  avatar_url: string;
-  name: string;
-  id: string;
-};
-
 export type RatingWithProfile = {
   id: string;
   rate: number;
@@ -11,5 +5,9 @@ export type RatingWithProfile = {
   created_at: Date;
   book_id: string;
   user_id: string;
-  user: User;
+  user: {
+    avatar_url: string | null;
+    name: string;
+    id: string;
+  };
 };
