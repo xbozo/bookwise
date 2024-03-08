@@ -2,8 +2,10 @@ import { BookWithRatingsAndCategories } from "@/@types/book-with-ratings-and-cat
 import { X } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import Image from "next/image";
-import { AvaliateButton } from "./dialog/avaliate-button";
+import { useRouter } from "next/navigation";
+import { NoAuthReviewButton } from "./dialog/no-auth-review-button";
 import { RatingCard } from "./dialog/rating-card";
+import { ReviewBook } from "./dialog/review-book";
 
 export function BookCard({
   bookData,
@@ -12,6 +14,8 @@ export function BookCard({
   bookData: BookWithRatingsAndCategories;
   isExploreLayout?: boolean;
 }) {
+  const router = useRouter();
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -193,10 +197,12 @@ export function BookCard({
               <div className="flex items-center justify-between">
                 <span className="text-sm">Avaliações</span>
 
-                <AvaliateButton />
+                <NoAuthReviewButton />
               </div>
 
               <section className="flex flex-col gap-3">
+                <ReviewBook bookId={bookData.id} />
+
                 {bookData.ratings.map((ratingDetails, i) => {
                   return <RatingCard ratingDetails={ratingDetails} key={i} />;
                 })}

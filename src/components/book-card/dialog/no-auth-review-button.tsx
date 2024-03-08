@@ -4,7 +4,7 @@ import { X } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { signIn, useSession } from "next-auth/react";
 
-export function AvaliateButton() {
+export function NoAuthReviewButton() {
   const { data: userData } = useSession();
 
   if (userData) {
